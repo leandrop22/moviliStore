@@ -19,16 +19,11 @@ export default function RegisterPage() {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       router.push("/");
-    } catch (err) {
-        // 'err' es unknown por defecto; comprobamos si es Error antes de usar .message
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Ocurrió un error inesperado");
-        }
-      } finally {
-        setLoading(false);
-      }
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Ocurrió un error inesperado");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

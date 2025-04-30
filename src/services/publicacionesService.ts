@@ -1,12 +1,59 @@
-import { db } from "../services/firebaseConfig";
 import { collection, getDocs, addDoc } from "firebase/firestore";
-import { Phone } from "../types/Phone";
 
-export async function getAllPublicaciones(): Promise<Phone[]> {
-  const snap = await getDocs(collection(db, "publicaciones"));
-  return snap.docs.map(d => ({ id: d.id, ...d.data() } as Phone));
+import { PublicacionBase, Publicacion } from "@/types/Publicacion";
+import { db } from "./firebaseConfig";
+
+/**
+ * Obtiene todas las publicaciones desde Firestore.
+ */
+export async function getAllPublicaciones(): Promise<Publicacion[]> {
+  try {
+    const colRef = collection(db, "publicaciones");
+    const snapshot = await getDocs(colRef);
+
+    const publicaciones: Publicacion[] = snapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      if (
+        typeof data.marca !== "string" ||
+        typeof data.modelo !== "string" ||
+        typeof data.precio !== "number" ||
+        typeof data.lat !== "number" ||
+        typeof data.lon !== "number"
+      ) {
+        console.warn("Publicación con datos inválidos ignorada:", doc.id);
+        return null;
+      }
+
+      return {
+        id: doc.id,
+        marca: data.marca,
+        modelo: data.modelo,
+        precio: data.precio,
+        descripcion: data.descripcion ?? "",
+        fotoUrl: data.fotoUrl ?? null,
+        lat: data.lat,
+        lon: data.lon,
+      };
+    }).filter(Boolean) as Publicacion[];
+
+    return publicaciones;
+  } catch (error) {
+    console.error("Error al obtener publicaciones:", error);
+    return [];
+  }
 }
 
-export async function createPublicacion(data: Phone) {
-  await addDoc(collection(db, "publicaciones"), data);
+/**
+ * Crea una nueva publicación en Firestore.
+ */
+export async function createPublicacion(data: PublicacionBase): Promise<void> {
+  try {
+    const colRef = collection(db, "publicaciones");
+    await addDoc(colRef, data);
+  } catch (error) {
+    console.error("Error al crear publicación:", error);
+    throw error;
+  }
 }
+

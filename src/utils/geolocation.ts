@@ -1,9 +1,24 @@
-export function getUserLocation(): Promise<{ lat: number; lon: number }> {
-    return new Promise((res, rej) =>
+export function getCurrentLocation(): Promise<{ lat: number; lon: number }> {
+    if (typeof window === "undefined" || !navigator.geolocation) {
+      return Promise.reject(new Error("La geolocalización no está disponible"));
+    }
+  
+    return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
-        (pos) => res({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
-        (err) => rej(err)
-      )
-    );
+        (pos) => {
+          resolve({
+            lat: pos.coords.latitude,
+            lon: pos.coords.longitude,
+          });
+        },
+        (err) => {
+          reject(new Error("No se pudo obtener la ubicación: " + err.message));
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+        }
+      );
+    });
   }
   

@@ -1,11 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import Header from "../components/Navbar";
+
 import SearchBar from "../components/SearchBar";
 
-import LocationPicker from "../components/LocationPicker";
+import dynamic from "next/dynamic";
+
+// Evita el SSR que rompe Leaflet
+const LocationPicker = dynamic(() => import("../components/LocationPicker"), {
+  ssr: false,
+});
 import PhoneCard from "../components/PhoneCard";
-import { Phone } from "../types/Phone";
+import { Phone } from "../types/Publicacion";
 import { getAllPublicaciones } from "../services/publicacionesService";
 import { getDistance } from "../utils/distance";
 import UbicacionBoton from "@/components/UbicacionBoton";
@@ -32,8 +37,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Header />
-      <main className="flex flex-col md:flex-row h-[calc(100vh-64px)]">
+          <main className="flex flex-col md:flex-row h-[calc(100vh-64px)]">
         <aside>
           <SearchBar onSearch={setFiltro} />
           <UbicacionBoton

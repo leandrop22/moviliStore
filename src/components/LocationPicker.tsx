@@ -1,25 +1,16 @@
 "use client";
 
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Circle,
-  useMapEvents,
-  useMap,
-} from "react-leaflet";
-import { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Circle, useMapEvents } from "react-leaflet";
+import { useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-const myIcon = new L.Icon({
+const markerIcon = new L.Icon({
   iconUrl: "/marker-icon.png",
   iconRetinaUrl: "/marker-icon-2x.png",
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
   iconSize: [25, 41],
+  iconAnchor: [12, 41],
 });
-
 
 interface Props {
   radiusKm: number;
@@ -28,13 +19,6 @@ interface Props {
 
 export default function LocationPicker({ radiusKm, onLocationChange }: Props) {
   const [pos, setPos] = useState<{ lat: number; lon: number } | null>(null);
-  const map = useMap();
-
-  useEffect(() => {
-    if (pos) {
-      map.setView([pos.lat, pos.lon], radiusToZoom(radiusKm));
-    }
-  }, [radiusKm, pos, map]);
 
   function LocationMarker() {
     useMapEvents({
@@ -46,30 +30,22 @@ export default function LocationPicker({ radiusKm, onLocationChange }: Props) {
       },
     });
 
-    return pos ? <Marker position={[pos.lat, pos.lon]} icon={myIcon} /> : null;
+    return pos ? <Marker position={[pos.lat, pos.lon]} icon={markerIcon} /> : null;
   }
 
   return (
-    <MapContainer center={[-32.89, -68.84]} zoom={13} className="leaflet-container">
+    <MapContainer
+      center={[-32.89, -68.84]}
+      zoom={13}
+      className="leaflet-container"
+      scrollWheelZoom
+    >
       <TileLayer
-        attribution='&copy; <a href="https://osm.org/">OpenStreetMap</a> contributors'
+        attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <LocationMarker />
-      {pos && (
-        <Circle
-          center={[pos.lat, pos.lon]}
-          radius={radiusKm * 1000}
-        />
-      )}
+      {pos && <Circle center={[pos.lat, pos.lon]} radius={radiusKm * 1000} />}
     </MapContainer>
   );
-}
-
-function radiusToZoom(km: number): number {
-  if (km < 5) return 14;
-  if (km < 10) return 13;
-  if (km < 20) return 12;
-  if (km < 50) return 11;
-  return 10;
 }

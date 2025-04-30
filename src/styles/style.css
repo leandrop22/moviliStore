@@ -395,3 +395,46 @@ aside {
 .card-body .btn:hover {
   background: #2563eb;
 }
+
+/* --- Botón de ubicación --- */
+.ubic-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: #1e293b;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  transition: background 0.2s;
+}
+
+.ubic-btn:hover {
+  background-color: #e2e8f0;
+}
+
+/* --- Mejora visual para el input de rango --- */
+.radius-control input[type="range"] {
+  margin-bottom: 1rem;
+}
+
+/* --- Estilo adicional para botón "Limpiar" en búsqueda --- */
+.search-bar button {
+  background: transparent;
+  color: #3b82f6;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.search-bar button:hover {
+  text-decoration: underline;
+}
+
+/* --- Suavizado de desplazamiento global --- */
+html {
+  scroll-behavior: smooth;
+}

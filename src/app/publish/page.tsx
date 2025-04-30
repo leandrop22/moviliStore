@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getUserLocation } from "@/utils/geolocation";
+import { getCurrentLocation } from "@/utils/geolocation";
 import { createPublicacion } from "@/services/publicacionesService";
-import { Phone } from "@/types/Phone";
+import { PublicacionBase } from "@/types/Publicacion";
 
 export default function PublishPage() {
   const router = useRouter();
@@ -17,11 +17,11 @@ export default function PublishPage() {
   const handle = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const loc = await getUserLocation();
-      const newPhone: Phone = {
+      const loc = await getCurrentLocation();
+      const newPhone: PublicacionBase = {
         modelo,
         marca,
-        precio: Number(precio),
+        precio: parseFloat(precio),
         descripcion: desc,
         lat: loc.lat,
         lon: loc.lon,
@@ -42,7 +42,7 @@ export default function PublishPage() {
       <form onSubmit={handle} className="form">
         <input type="text" placeholder="Marca" value={marca} onChange={(e) => setMarca(e.target.value)} className="form-input" required />
         <input type="text" placeholder="Modelo" value={modelo} onChange={(e) => setModelo(e.target.value)} className="form-input" required />
-        <input type="number" placeholder="Precio" value={precio} onChange={(e) => setPrecio(e.target.value)} className="form-input" required />
+        <input type="number" placeholder="Precio" value={precio} onChange={(e) => setPrecio(e.target.value)} className="form-input" min="0" required />
         <textarea placeholder="Descripción" value={desc} onChange={(e) => setDesc(e.target.value)} className="form-input" required />
         <button type="submit" className="form-button">Publicar</button>
       </form>

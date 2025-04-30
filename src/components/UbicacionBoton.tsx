@@ -9,7 +9,16 @@ interface Props {
 }
 
 const UbicacionBoton: FC<Props> = ({ locationText, radiusKm, onClick }) => (
-  <div onClick={onClick} className="ubic-btn">
+  <div
+    role="button"
+    tabIndex={0}
+    onClick={onClick}
+    onKeyDown={(e) => {
+      if (e.key === "Enter" || e.key === " ") onClick();
+    }}
+    className="ubic-btn flex items-center gap-2 cursor-pointer"
+    aria-label={`Ubicación actual: ${locationText}, radio: ${radiusKm} kilómetros`}
+  >
     <MapPin className="w-5 h-5" />
     {locationText} · {radiusKm} km
   </div>

@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
@@ -12,6 +13,7 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/");
@@ -22,14 +24,32 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="form-container login">
-      <h1 className="form-title">Iniciar sesión</h1>
+    <main className="login">
+      
+      <div className="form" onSubmit={handleLogin}>
+        <h2 className="form-title">Iniciar Sesión</h2>
       {error && <p className="form-error">{error}</p>}
-      <form onSubmit={handleLogin} className="form">
-        <input className="form-input" type="email" placeholder="Correo" value={email} onChange={e => setEmail(e.target.value)} />
-        <input className="form-input" type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} />
+        <form onSubmit={handleLogin} className="form">
+        <input
+          className="form-input"
+          type="email"
+          placeholder="Correo"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          className="form-input"
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
         <button className="form-button" type="submit">Ingresar</button>
       </form>
-    </div>
+      </div>
+    
+    </main>
   );
 }
