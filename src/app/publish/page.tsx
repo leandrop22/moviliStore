@@ -2,60 +2,50 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { getUserLocation } from "@/utils/geolocation";
+import { createPublicacion } from "@/services/publicacionesService";
+import { Phone } from "@/types/Phone";
 
 export default function PublishPage() {
   const router = useRouter();
-  const [phoneModel, setPhoneModel] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [modelo, setModelo] = useState("");
+  const [marca, setMarca] = useState("");
+  const [precio, setPrecio] = useState("");
+  const [desc, setDesc] = useState("");
+  const [err, setErr] = useState<string | null>(null);
 
-  const handlePublish = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handle = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phoneModel || !price || !description) {
-      setError("Por favor, complete todos los campos.");
-      return;
+    try {
+      const loc = await getUserLocation();
+      const newPhone: Phone = {
+        modelo,
+        marca,
+        precio: Number(precio),
+        descripcion: desc,
+        lat: loc.lat,
+        lon: loc.lon,
+        fotoUrl: "",
+      };
+      await createPublicacion(newPhone);
+      router.push("/");
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Error desconocido";
+      setErr(message);
     }
-
-    setError(null);
-    // Aquí guardarías la publicación en Firebase o en tu base de datos
-    console.log("Publicando:", { phoneModel, price, description });
-
-    router.push("/"); // Redirigir a Home después de publicar
   };
 
   return (
-    <main className="publish">
-      <form className="form" onSubmit={handlePublish}>
-        <h2 className="form-title">Publicar Teléfono</h2>
-        {error && <p className="form-error">{error}</p>}
-        <input
-          type="text"
-          placeholder="Modelo del teléfono"
-          className="form-input"
-          value={phoneModel}
-          onChange={(e) => setPhoneModel(e.target.value)}
-          required
-        />
-        <input
-          type="number"
-          placeholder="Precio"
-          className="form-input"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-        />
-        <textarea
-          placeholder="Descripción del teléfono"
-          className="form-input"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          required
-        />
-        <button type="submit" className="form-button">
-          Publicar
-        </button>
+    <div className="form-container publish">
+      <h1 className="form-title">Publicar Teléfono</h1>
+      {err && <p className="form-error">{err}</p>}
+      <form onSubmit={handle} className="form">
+        <input type="text" placeholder="Marca" value={marca} onChange={(e) => setMarca(e.target.value)} className="form-input" required />
+        <input type="text" placeholder="Modelo" value={modelo} onChange={(e) => setModelo(e.target.value)} className="form-input" required />
+        <input type="number" placeholder="Precio" value={precio} onChange={(e) => setPrecio(e.target.value)} className="form-input" required />
+        <textarea placeholder="Descripción" value={desc} onChange={(e) => setDesc(e.target.value)} className="form-input" required />
+        <button type="submit" className="form-button">Publicar</button>
       </form>
-    </main>
+    </div>
   );
 }

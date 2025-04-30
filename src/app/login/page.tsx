@@ -1,62 +1,35 @@
 "use client";
-
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { auth } from "@/firebase/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import { auth } from "@/services/firebaseConfig";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/");
-    } catch (err) {
-        // 'err' es unknown por defecto; comprobamos si es Error antes de usar .message
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Error al inicar sesión");
-        }
-      } finally {
-        setLoading(false);
-      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Error al iniciar sesión";
+      setError(message);
+    }
   };
 
   return (
-    <main className="login">
-      <form className="form" onSubmit={handleLogin}>
-        <h2 className="form-title">Iniciar Sesión</h2>
-        {error && <p className="form-error">{error}</p>}
-        <input
-          type="email"
-          placeholder="Email"
-          className="form-input"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          className="form-input"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit" className="form-button" disabled={loading}>
-          {loading ? "Ingresando..." : "Entrar"}
-        </button>
+    <div className="form-container login">
+      <h1 className="form-title">Iniciar sesión</h1>
+      {error && <p className="form-error">{error}</p>}
+      <form onSubmit={handleLogin} className="form">
+        <input className="form-input" type="email" placeholder="Correo" value={email} onChange={e => setEmail(e.target.value)} />
+        <input className="form-input" type="password" placeholder="Contraseña" value={password} onChange={e => setPassword(e.target.value)} />
+        <button className="form-button" type="submit">Ingresar</button>
       </form>
-    </main>
-);
+    </div>
+  );
 }

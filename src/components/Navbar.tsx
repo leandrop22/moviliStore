@@ -11,8 +11,8 @@ export default function Navbar() {
         </Link>
         <div className="navbar-links">
           <Link href="/login" className="navbar-link">Login</Link>
-          <Link href="/register" className="navbar-link">Registro</Link>
-          <Link href="/publish" className="navbar-link">Publicar</Link>
+          <Link href="/register" className="navbar-link">Register</Link>
+          <Link href="/publish" className="navbar-link">Publish</Link>
         </div>
       </div>
     </nav> 
