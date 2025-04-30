@@ -1,6 +1,3 @@
-
-
-
 /* --- Reset de Estilos --- */
 * {
   margin: 0;
@@ -48,32 +45,6 @@ body {
 
 .navbar-link:hover {
   text-decoration: underline;
-}
-
-/* --- Página de Inicio --- */
-.home {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
-}
-
-.home-card {
-  background: white;
-  padding: 3rem;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.home-title {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.home-text {
-  font-size: 1.2rem;
-  color: #555;
 }
 
 /* --- Formularios (Registro, Publicación y Login) --- */
@@ -162,15 +133,184 @@ body {
   background-color: #2563eb;
 }
 
-/* --- Ajustes de Layout para Formularios --- */
-.register, .publish, .login {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80vh;
+/* --- Mapa --- */
+.leaflet-container {
+  width: 100%;
+  height: 300px;
+  border-radius: 8px;
 }
 
-/* --- Estilo de Listado de Publicaciones --- */
+/* --- Controles de ubicación y distancia --- */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+.radius-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.radius-control label {
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.radius-control input[type="range"] {
+  width: 100%;
+  accent-color: #3b82f6;
+}
+
+/* --- Grid de tarjetas de publicaciones --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-image {
+  margin-bottom: 1rem;
+}
+
+.card-img {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.card-price {
+  color: #4b5563;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.card-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.card-button:hover {
+  background-color: #2563eb;
+}
+
+/* --- Controles de búsqueda y filtros --- */
+.search-bar {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  margin: 1.5rem auto;
+  background: white;
+  border-radius: 50px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.search-bar__input {
+  flex: 1;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-bar__input::placeholder {
+  color: #888;
+}
+
+.search-bar__button {
+  background-color: #3b82f6;
+  border: none;
+  padding: 0 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-bar__button:hover {
+  background-color: #2563eb;
+}
+
+.search-bar__button:active {
+  background-color: #1d4ed8;
+}
+
+/* --- Perfil --- */
+.profile-circle {
+  width: 36px;
+  height: 36px;
+  background: #cbd5e1;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+
+.profile-circle img {
+  width: 100%; height: 100%; border-radius: 50%;
+  object-fit: cover;
+}
+
+/* --- Layout principal --- */
+main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+@media(min-width: 768px) {
+  main {
+    flex-direction: row;
+  }
+}
+
+aside {
+  background: #fff;
+  padding: 1.5rem;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+@media(min-width: 768px) {
+  aside {
+    width: 25%;
+    border-right: 1px solid #e2e8f0;
+  }
+}
+
+/* --- Estilos específicos de publicaciones --- */
 .publications-list {
   display: flex;
   flex-wrap: wrap;
@@ -224,244 +364,34 @@ body {
   background-color: #2563eb;
 }
 
-.card {
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  text-align: center;
-  max-width: 250px;
-  margin: 1rem;
-  transition: transform 0.2s ease-in-out;
+/* --- Estilo de tarjetas adicionales --- */
+.card-body {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.card-image {
-  margin-bottom: 1rem;
-}
-
-.card-img {
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.card-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #1e293b;
+.card-body h2 {
+  font-size: 1.1rem;
   margin-bottom: 0.5rem;
 }
 
-.card-price {
-  color: #4b5563;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-.card-button {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: #3b82f6;
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: background 0.3s;
-}
-
-.card-button:hover {
-  background-color: #2563eb;
-}
-
-/* --- Barra de Búsqueda --- */
-.search-bar {
-  display: flex;
-  width: 100%;
-  max-width: 600px;
-  margin: 1.5rem auto;
-  background: white;
-  border-radius: 50px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  overflow: hidden;
-}
-
-.search-bar__input {
+.card-body p {
   flex: 1;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  outline: none;
+  margin-bottom: 0.5rem;
+  color: #4b5563;
 }
 
-.search-bar__input::placeholder {
-  color: #888;
+.card-body .btn {
+  background: #3b82f6;
+  color: #fff;
+  text-align: center;
+  padding: 0.5rem;
+  border-radius: 4px;
+  text-decoration: none;
 }
 
-.search-bar__button {
-  background-color: #3b82f6;
-  border: none;
-  padding: 0 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background-color 0.2s;
+.card-body .btn:hover {
+  background: #2563eb;
 }
-
-.search-bar__button:hover {
-  background-color: #2563eb;
-}
-
-.search-bar__button:active {
-  background-color: #1d4ed8;
-}
-
-/* Leaflet CSS */
-.leaflet-container {
-  width: 100%;
-  height: 300px;
-  border-radius: 8px;
-}
-/* Controles superiores */
-.controls {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 800px;
-  margin: 1rem auto;
-  padding: 0 1rem;
-}
-
-/* Slider de rango */
-.radius-control {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.5rem;
-}
-
-.radius-control label {
-  font-weight: bold;
-  color: #1e293b;
-}
-
-.radius-control input[type="range"] {
-  width: 100%;
-  accent-color: #3b82f6; /* color del thumb en navegadores compatibles */
-}
-
-/* SearchBar */
-.searchbar-container {
-  display: flex;
-  align-items: center;
-  background-color: white;
-  border-radius: 50px;
-  padding: 0.5rem 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-/* Mapa */
-.leaflet-container {
-  width: 100%;
-  height: 300px;
-  border-radius: 8px;
-}
-
-/* Grid de tarjetas */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
-  padding: 2rem 1rem;
-}
-
-/* Reset y básicos */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Segoe UI', sans-serif; background: #f5f6f8; color: #333; min-height: 100vh; }
-
-/* Layout */
-main { display: flex; flex-direction: column; height: 100vh; }
-@media(min-width: 768px) {
-  main { flex-direction: row; }
-}
-
-/* Panel lateral */
-aside {
-  background: #fff;
-  padding: 1.5rem;
-  width: 100%;
-  max-height: 100%;
-  overflow-y: auto;
-}
-@media(min-width: 768px) {
-  aside { width: 25%; border-right: 1px solid #e2e8f0; }
-}
-
-/* Controles */
-.search-bar { margin-bottom: 1rem; }
-.radius-control { margin-bottom: 1rem; }
-.radius-control label { font-weight: 600; }
-.radius-control input[type=range] { width: 100%; }
-
-/* Botón ubicación */
-.ubic-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #2563eb;
-  cursor: pointer;
-  margin-bottom: 1rem;
-}
-.ubic-btn:hover { text-decoration: underline; }
-
-/* Mapa */
-.leaflet-container { width: 100%; height: 200px; border-radius: 8px; margin-bottom: 1rem; }
-
-/* Zona de publicaciones */
-section { flex: 1; padding: 1.5rem; overflow-y: auto; }
-.grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-}
-@media(min-width: 640px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media(min-width: 1024px) {
-  .grid { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* Tarjetas */
-.card {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.card img { width: 100%; height: 150px; object-fit: cover; }
-.card-body { padding: 1rem; flex: 1; display: flex; flex-direction: column; }
-.card-body h2 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-.card-body p { flex: 1; margin-bottom: 0.5rem; color: #4b5563; }
-.card-body .btn { 
-  background: #3b82f6; color: #fff; text-align: center;
-  padding: 0.5rem; border-radius: 4px; text-decoration: none;
-}
-.card-body .btn:hover { background: #2563eb; }
-
-/* Perfil */
-.profile-circle {
-  width: 36px; height: 36px;
-  background: #cbd5e1;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-}
-.profile-circle img {
-  width: 100%; height: 100%; border-radius: 50%;
-  object-fit: cover;
-}
-

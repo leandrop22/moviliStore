@@ -8,11 +8,11 @@ import PhoneCard from "../components/PhoneCard";
 import { Phone } from "../types/Phone";
 import { getAllPublicaciones } from "../services/publicacionesService";
 import { getDistance } from "../utils/distance";
-import UbicacionBoton from "@/components/Ubicacionboton";
+import UbicacionBoton from "@/components/UbicacionBoton";
 
 export default function HomePage() {
   const [phones, setPhones] = useState<Phone[]>([]);
-  const [center, setCenter] = useState<{lat:number; lon:number} | null>(null);
+  const [center, setCenter] = useState<{ lat: number; lon: number } | null>(null);
   const [radiusKm, setRadiusKm] = useState(20);
   const [filtro, setFiltro] = useState("");
   const [showMap, setShowMap] = useState(false);
@@ -53,9 +53,10 @@ export default function HomePage() {
           </label>
           {showMap && (
             <LocationPicker
-              radiusKm={radiusKm}
-              onLocationChange={pos => setCenter(pos)}
-            />
+            radiusKm={radiusKm}
+            onLocationChange={(lat: number, lon: number) => setCenter({ lat, lon })}
+          />
+
           )}
         </aside>
 
