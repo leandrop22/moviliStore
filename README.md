@@ -1,55 +1,138 @@
+# 🛠 Instrucciones para configurar el entorno de desarrollo
 
-🛠 Instrucciones para configurar el entorno de desarrollo 
+Este proyecto está desarrollado con **Next.js + Firebase**, así que para trabajar localmente, seguí estos pasos:
 
-Este proyecto está desarrollado con Next.js + Firebase, así que para trabajar localmente, seguí estos pasos:
+---
 
-✅ Requisitos
+## ✅ Requisitos
 
-1. Instalá las siguientes herramientas:
+### 1. Instalá las siguientes herramientas:
 
-Node.js (versión LTS)
+* [Node.js (versión LTS)](https://nodejs.org/)
+* [Git](https://git-scm.com/)
+* [Visual Studio Code (VS Code)](https://code.visualstudio.com/) (opcional pero recomendado)
 
-Git
+Verificá la instalación:
 
-Visual Studio Code (VS Code)
-
-Verificá la instalación en la terminal:
-
+```bash
 node -v
 npm -v
 git --version
+```
 
-🚀 Clonar el repositorio y levantar el proyecto
+---
 
-1. Cloná el proyecto(terminal):
+## 🚀 Clonar el repositorio y levantar el proyecto
 
+### 1. Cloná el proyecto:
+
+```bash
 git clone https://github.com/leandrop22/moviliStore.git
 cd moviliStore
+```
 
-2. Instalá las dependencias (terminal):
+### 2. Instalá las dependencias:
 
+```bash
 npm install
+```
 
+### 3. Variables de entorno
 
-3. Ejecutá el proyecto
+Crea un archivo llamado `.env.local` en la raiz del proyecto con los siguientes datos (pedíselos al admin del proyecto):
 
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+NEXT_PUBLIC_FIREBASE_APP_ID=...
+```
+
+> ⚠ Importante: Este archivo **NO debe subirse a GitHub**. Asegurate de tener en tu `.gitignore` la línea:
+> `.env.local`
+
+### 4. Ejecutá el proyecto
+
+```bash
 npm run dev
+```
 
-Abrí en el navegador: http://localhost:3000
+Abrí en el navegador: `http://localhost:3000`
 
-🧩 Recomendaciones para Visual Studio Code
+---
+
+## 🧩 Recomendaciones para Visual Studio Code
 
 Instalá estas extensiones:
 
-ESLint
+* ESLint
+* Prettier
+* Tailwind CSS IntelliSense (si se usa Tailwind en el futuro)
 
-Prettier
+---
 
-Tailwind CSS IntelliSense (si se usa Tailwind en el futuro)
+## 📚 Buenas prácticas con Git
 
-✅ Todo listo
+Aunque podés hacer simplemente:
+
+```bash
+git add .
+git commit -m "mensaje"
+git push
+```
+
+Es importante conocer y aplicar estas buenas prácticas:
+
+### 1. **Comentar claramente**
+
+Usá mensajes de commit que expliquen lo que hiciste:
+
+```bash
+git commit -m "Agrega formulario de publicación con validación"
+```
+
+### 2. **Evitá subir archivos sensibles**
+
+Revisá que `.env.local`, carpetas temporales, etc. estén en `.gitignore`.
+
+### 3. **Trabajá con ramas si es necesario**
+
+Para trabajar en nuevas funcionalidades sin romper nada:
+
+```bash
+git checkout -b nombre-de-la-rama
+```
+
+Cuando termines:
+
+```bash
+git checkout main
+git merge nombre-de-la-rama
+git push origin main
+```
+
+### 4. **Sincronizá antes de hacer push**
+
+Si alguien más subió algo:
+
+```bash
+git pull origin main --rebase
+```
+
+Luego:
+
+```bash
+git push origin main
+```
+
+---
+
+## ✅ Todo listo
 
 Una vez hecho esto, ya podés desarrollar y colaborar en el proyecto sin problemas 🚀
+
 -------------------------------------------------------------------------------------------
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
