@@ -1,5 +1,56 @@
 
+🛠 Instrucciones para configurar el entorno de desarrollo 
 
+Este proyecto está desarrollado con Next.js + Firebase, así que para trabajar localmente, seguí estos pasos:
+
+✅ Requisitos
+
+1. Instalá las siguientes herramientas:
+
+Node.js (versión LTS)
+
+Git
+
+Visual Studio Code (VS Code)
+
+Verificá la instalación en la terminal:
+
+node -v
+npm -v
+git --version
+
+🚀 Clonar el repositorio y levantar el proyecto
+
+1. Cloná el proyecto(terminal):
+
+git clone https://github.com/leandrop22/moviliStore.git
+cd moviliStore
+
+2. Instalá las dependencias (terminal):
+
+npm install
+
+
+3. Ejecutá el proyecto
+
+npm run dev
+
+Abrí en el navegador: http://localhost:3000
+
+🧩 Recomendaciones para Visual Studio Code
+
+Instalá estas extensiones:
+
+ESLint
+
+Prettier
+
+Tailwind CSS IntelliSense (si se usa Tailwind en el futuro)
+
+✅ Todo listo
+
+Una vez hecho esto, ya podés desarrollar y colaborar en el proyecto sin problemas 🚀
+-------------------------------------------------------------------------------------------
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
