@@ -8,8 +8,11 @@ import "leaflet/dist/leaflet.css";
 const markerIcon = new L.Icon({
   iconUrl: "/marker-icon.png",
   iconRetinaUrl: "/marker-icon-2x.png",
+  shadowUrl: "/marker-shadow.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
 });
 
 interface Props {
@@ -31,19 +34,20 @@ export default function LocationPicker({ radiusKm, onLocationChange }: Props) {
       },
     });
 
-    return pos ? <Marker position={[pos.lat, pos.lon]} icon={markerIcon} /> : null;
+    return pos ? (
+      <Marker position={[pos.lat, pos.lon]} icon={markerIcon} title="" />
+    ) : null;
   }
 
   function ZoomUpdater() {
     const map = useMap();
 
     useEffect(() => {
-        if (pos) {
-          map.setZoom(radiusToZoom(radiusKm));
-        }
+      if (pos) {
+        map.setZoom(radiusToZoom(radiusKm));
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, [radiusKm, pos]);
-      
+    }, [radiusKm, pos]);
 
     return null;
   }

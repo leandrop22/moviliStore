@@ -4,7 +4,15 @@ import {
     signOut,
     onAuthStateChanged,
     User,
+    getAuth,
   } from "firebase/auth";
+ 
+
+  export function onUserStateChange(callback: (user: User | null) => void)  {
+  const auth = getAuth();
+  return onAuthStateChanged(auth, callback);
+}
+
 import { auth } from "./firebaseConfig";
 
   /**
@@ -50,4 +58,6 @@ import { auth } from "./firebaseConfig";
   export function onUserChange(callback: (user: User | null) => void): void {
     onAuthStateChanged(auth, callback);
   }
+
+  
   
