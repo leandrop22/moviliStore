@@ -1,17 +1,17 @@
 import { collection, getDocs, addDoc } from "firebase/firestore";
 
-import { publicacionBase, publicacion } from "@/types/Publicacion";
+import { PublicacionBase, Publicacion } from "@/types/Publicacion";
 import { db } from "./firebaseConfig";
 
 /**
  * Obtiene todas las publicaciones desde Firestore.
  */
-export async function getAllPublicaciones(): Promise<publicacion[]> {
+export async function getAllPublicaciones(): Promise<Publicacion[]> {
   try {
     const colRef = collection(db, "publicaciones");
     const snapshot = await getDocs(colRef);
 
-    const publicaciones: publicacion[] = snapshot.docs.map((doc) => {
+    const publicaciones: Publicacion[] = snapshot.docs.map((doc) => {
       const data = doc.data();
 
       if (
@@ -36,7 +36,7 @@ export async function getAllPublicaciones(): Promise<publicacion[]> {
         lat: data.lat,
         lon: data.lon,
       };
-    }).filter(Boolean) as publicacion[];
+    }).filter(Boolean) as Publicacion[];
 
     return publicaciones;
   } catch (error) {
@@ -48,7 +48,7 @@ export async function getAllPublicaciones(): Promise<publicacion[]> {
 /**
  * Crea una nueva publicación en Firestore.
  */
-export async function createPublicacion(data: publicacionBase): Promise<void> {
+export async function createPublicacion(data: PublicacionBase): Promise<void> {
   try {
     const colRef = collection(db, "publicaciones");
     await addDoc(colRef, data);

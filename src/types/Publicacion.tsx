@@ -1,6 +1,6 @@
 // types.ts
 
-export interface publicacionBase {
+export interface PublicacionBase {
     marca: string;
     modelo: string;
     precio: number;
@@ -10,10 +10,10 @@ export interface publicacionBase {
     fotoUrl?: string;
   }
   
-  export interface publicacion extends publicacionBase {
+  export interface Publicacion extends PublicacionBase {
     id: string;
   }
   
   // Alias si querés mantener compatibilidad con el nombre anterior
-  export type phone = publicacion;
+  export type Phone = Publicacion;
   

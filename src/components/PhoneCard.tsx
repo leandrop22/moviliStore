@@ -2,17 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { phone } from "@/types/Publicacion";
+import { Phone } from "@/types/Publicacion";
 
-export default function PhoneCard({ phone }: { phone: phone}) {
-  const src = phone.fotoUrl || "/placeholder.png";
+export default function PhoneCard({ Phone }: { Phone: Phone}) {
+  const src = Phone.fotoUrl || "/placeholder.png";
 
   return (
     <div className="card">
       <div className="card-image">
         <Image
           src={src}
-          alt={phone.modelo || "Teléfono"}
+          alt={Phone.modelo || "Teléfono"}
           width={200}
           height={200}
           className="card-img"
@@ -23,12 +23,12 @@ export default function PhoneCard({ phone }: { phone: phone}) {
         />
       </div>
       <h2 className="card-title">
-        {phone.marca} {phone.modelo}
+        {Phone.marca} {Phone.modelo}
       </h2>
       <p className="card-price">
-        {phone.precio !== undefined ? `$${phone.precio}` : "Precio no disponible"}
+        {Phone.precio !== undefined ? `$${Phone.precio}` : "Precio no disponible"}
       </p>
-      <Link href={`/${phone.id}`} className="card-button">
+      <Link href={`/${Phone.id}`} className="card-button">
         Ver más
       </Link>
     </div>

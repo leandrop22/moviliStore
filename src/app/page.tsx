@@ -10,13 +10,14 @@ const LocationPicker = dynamic(() => import("../components/LocationPicker"), {
   ssr: false,
 });
 import PhoneCard from "../components/PhoneCard";
-import { phone } from "../types/Publicacion";
+
 import { getAllPublicaciones } from "../services/publicacionesService";
 import { getDistance } from "../utils/distance";
 import UbicacionBoton from "@/components/UbicacionBoton";
+import { Phone } from "@/types/Publicacion";
 
 export default function HomePage() {
-  const [phones, setPhones] = useState<phone[]>([]);
+  const [Phones, setPhones] = useState<Phone[]>([]);
   const [center, setCenter] = useState<{ lat: number; lon: number } | null>(null);
   const [radiusKm, setRadiusKm] = useState(10);
   const [filtro, setFiltro] = useState("");
@@ -26,7 +27,7 @@ export default function HomePage() {
     getAllPublicaciones().then(setPhones);
   }, []);
 
-  const filtered = phones.filter(p => {
+  const filtered = Phones.filter(p => {
     const textMatch =
       p.marca.toLowerCase().includes(filtro.toLowerCase()) ||
       p.modelo.toLowerCase().includes(filtro.toLowerCase());
@@ -67,7 +68,7 @@ export default function HomePage() {
         <section>
           <div className="grid">
             {filtered.map(p => (
-              <PhoneCard key={p.id} phone={p} />
+              <PhoneCard key={p.id} Phone={p} />
             ))}
           </div>
         </section>
