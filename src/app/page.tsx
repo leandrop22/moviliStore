@@ -1,23 +1,19 @@
 "use client";
 import { useEffect, useState } from "react";
-
 import SearchBar from "../components/SearchBar";
-
 import dynamic from "next/dynamic";
-
-// Evita el SSR que rompe Leaflet
-const LocationPicker = dynamic(() => import("../components/LocationPicker"), {
-  ssr: false,
-});
 import PhoneCard from "../components/PhoneCard";
-
 import { getAllPublicaciones } from "../services/publicacionesService";
 import { getDistance } from "../utils/distance";
 import UbicacionBoton from "@/components/UbicacionBoton";
 import { Phone } from "@/types/Publicacion";
 
+const LocationPicker = dynamic(() => import("../components/LocationPicker"), {
+  ssr: false,
+});
+
 export default function HomePage() {
-  const [Phones, setPhones] = useState<Phone[]>([]);
+  const [phones, setPhones] = useState<Phone[]>([]);
   const [center, setCenter] = useState<{ lat: number; lon: number } | null>(null);
   const [radiusKm, setRadiusKm] = useState(10);
   const [filtro, setFiltro] = useState("");
@@ -27,7 +23,7 @@ export default function HomePage() {
     getAllPublicaciones().then(setPhones);
   }, []);
 
-  const filtered = Phones.filter(p => {
+  const filtered = phones.filter(p => {
     const textMatch =
       p.marca.toLowerCase().includes(filtro.toLowerCase()) ||
       p.modelo.toLowerCase().includes(filtro.toLowerCase());
@@ -37,42 +33,39 @@ export default function HomePage() {
   });
 
   return (
-    <>
-          <main className="flex flex-col md:flex-row h-[calc(100vh-64px)]">
-        <aside>
-          <SearchBar onSearch={setFiltro} />
-          <UbicacionBoton
-            locationText={center ? `${center.lat.toFixed(2)},${center.lon.toFixed(2)}` : "Elegí ubicación"}
-            radiusKm={radiusKm}
-            onClick={() => setShowMap(!showMap)}
+    <main className="flex flex-col md:flex-row h-[calc(100vh-64px)]">
+      <aside>
+        <SearchBar onSearch={setFiltro} />
+        <UbicacionBoton
+          locationText={center ? `${center.lat.toFixed(2)},${center.lon.toFixed(2)}` : "Elegí ubicación"}
+          radiusKm={radiusKm}
+          onClick={() => setShowMap(!showMap)}
+        />
+        <label className="radius-control">
+          Rango: {radiusKm} km
+          <input
+            type="range"
+            min={1}
+            max={50}
+            value={radiusKm}
+            onChange={e => setRadiusKm(+e.target.value)}
           />
-          <label className="radius-control">
-            Rango: {radiusKm} km
-            <input
-              type="range"
-              min={1}
-              max={50}
-              value={radiusKm}
-              onChange={e => setRadiusKm(+e.target.value)}
-            />
-          </label>
-          {showMap && (
-            <LocationPicker
+        </label>
+        {showMap && (
+          <LocationPicker
             radiusKm={radiusKm}
             onLocationChange={(lat: number, lon: number) => setCenter({ lat, lon })}
           />
+        )}
+      </aside>
 
-          )}
-        </aside>
-
-        <section>
-          <div className="grid">
-            {filtered.map(p => (
-              <PhoneCard key={p.id} Phone={p} />
-            ))}
-          </div>
-        </section>
-      </main>
-    </>
+      <section>
+        <div className="grid">
+          {filtered.map(p => (
+            <PhoneCard key={p.id} phone={p} />
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
