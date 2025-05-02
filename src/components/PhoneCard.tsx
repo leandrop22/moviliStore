@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Phone } from "@/types/Publicacion";
+import { phone } from "@/types/Publicacion";
 
-export default function PhoneCard({ phone }: { phone: Phone }) {
+export default function PhoneCard({ phone }: { phone: phone}) {
   const src = phone.fotoUrl || "/placeholder.png";
 
   return (
