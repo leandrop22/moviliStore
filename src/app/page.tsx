@@ -10,15 +10,15 @@ const LocationPicker = dynamic(() => import("../components/LocationPicker"), {
   ssr: false,
 });
 import PhoneCard from "../components/PhoneCard";
-import { Phone } from "../types/Publicacion";
+import { phone } from "../types/Publicacion";
 import { getAllPublicaciones } from "../services/publicacionesService";
 import { getDistance } from "../utils/distance";
 import UbicacionBoton from "@/components/UbicacionBoton";
 
 export default function HomePage() {
-  const [phones, setPhones] = useState<Phone[]>([]);
+  const [phones, setPhones] = useState<phone[]>([]);
   const [center, setCenter] = useState<{ lat: number; lon: number } | null>(null);
-  const [radiusKm, setRadiusKm] = useState(20);
+  const [radiusKm, setRadiusKm] = useState(10);
   const [filtro, setFiltro] = useState("");
   const [showMap, setShowMap] = useState(false);
 
@@ -50,7 +50,7 @@ export default function HomePage() {
             <input
               type="range"
               min={1}
-              max={100}
+              max={50}
               value={radiusKm}
               onChange={e => setRadiusKm(+e.target.value)}
             />

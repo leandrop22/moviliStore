@@ -48,7 +48,7 @@ body {
 }
 
 /* --- Formularios (Registro, Publicación y Login) --- */
-.register, .publish, .login {
+.register, .create, .login {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -437,4 +437,48 @@ aside {
 /* --- Suavizado de desplazamiento global --- */
 html {
   scroll-behavior: smooth;
+}
+
+/* PERFIL */
+.profile-page {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.profile-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* LOGOUT */
+.logout-page {
+  text-align: center;
+  padding: 3rem;
+}
+
+.logout-title {
+  font-size: 1.5rem;
+  color: #555;
+}
+.btn-logout {
+  background: none;
+  border: none;
+  color: white; /* o el color que estés usando en los links */
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 1rem;
+  text-decoration: none;
+}
+
+.btn-logout:hover {
+  text-decoration: underline;
 }

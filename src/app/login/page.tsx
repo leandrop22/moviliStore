@@ -25,11 +25,9 @@ export default function LoginPage() {
 
   return (
     <main className="login">
-      
-      <div className="form" onSubmit={handleLogin}>
+      <form className="form" onSubmit={handleLogin}>
         <h2 className="form-title">Iniciar Sesión</h2>
-      {error && <p className="form-error">{error}</p>}
-        <form onSubmit={handleLogin} className="form">
+        {error && <p className="form-error">{error}</p>}
         <input
           className="form-input"
           type="email"
@@ -47,8 +45,8 @@ export default function LoginPage() {
           required
         />
         <button className="form-button" type="submit">Ingresar</button>
+      
       </form>
-      </div>
     
     </main>
   );

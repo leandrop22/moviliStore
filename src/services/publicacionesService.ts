@@ -1,17 +1,17 @@
 import { collection, getDocs, addDoc } from "firebase/firestore";
 
-import { PublicacionBase, Publicacion } from "@/types/Publicacion";
+import { publicacionBase, publicacion } from "@/types/Publicacion";
 import { db } from "./firebaseConfig";
 
 /**
  * Obtiene todas las publicaciones desde Firestore.
  */
-export async function getAllPublicaciones(): Promise<Publicacion[]> {
+export async function getAllPublicaciones(): Promise<publicacion[]> {
   try {
     const colRef = collection(db, "publicaciones");
     const snapshot = await getDocs(colRef);
 
-    const publicaciones: Publicacion[] = snapshot.docs.map((doc) => {
+    const publicaciones: publicacion[] = snapshot.docs.map((doc) => {
       const data = doc.data();
 
       if (
@@ -19,7 +19,8 @@ export async function getAllPublicaciones(): Promise<Publicacion[]> {
         typeof data.modelo !== "string" ||
         typeof data.precio !== "number" ||
         typeof data.lat !== "number" ||
-        typeof data.lon !== "number"
+        typeof data.lon !== "number" 
+       
       ) {
         console.warn("Publicación con datos inválidos ignorada:", doc.id);
         return null;
@@ -35,7 +36,7 @@ export async function getAllPublicaciones(): Promise<Publicacion[]> {
         lat: data.lat,
         lon: data.lon,
       };
-    }).filter(Boolean) as Publicacion[];
+    }).filter(Boolean) as publicacion[];
 
     return publicaciones;
   } catch (error) {
@@ -47,7 +48,7 @@ export async function getAllPublicaciones(): Promise<Publicacion[]> {
 /**
  * Crea una nueva publicación en Firestore.
  */
-export async function createPublicacion(data: PublicacionBase): Promise<void> {
+export async function createPublicacion(data: publicacionBase): Promise<void> {
   try {
     const colRef = collection(db, "publicaciones");
     await addDoc(colRef, data);

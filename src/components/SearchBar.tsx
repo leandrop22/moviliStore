@@ -32,8 +32,7 @@ const SearchBar: FC<Props> = ({ onSearch }) => {
           type="button"
           onClick={clearSearch}
           className="search-bar__button"
-        >
-          Limpiar
+        >Limpiar
         </button>
       )}
     </form>

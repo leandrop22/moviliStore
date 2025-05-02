@@ -6,8 +6,8 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
 const markerIcon = new L.Icon({
-  iconUrl: "/marker-icon.png",
-  iconRetinaUrl: "/marker-icon-2x.png",
+  iconUrl: "/marker-icon-blue.png",
+  iconRetinaUrl: "/marker-icon-2x-blue.png",
   shadowUrl: "/marker-shadow.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
