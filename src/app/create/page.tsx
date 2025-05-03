@@ -20,6 +20,7 @@ export default function CreatePage() {
 
   const handle = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("Enviando formulario..."); 
     setErr(null);
     setLoading(true);
 
@@ -31,6 +32,11 @@ export default function CreatePage() {
       let fotoUrl = "";
       if (file) {
         const storageRef = ref(storage, `imagenes/${Date.now()}_${file.name}`);
+        if (!file) {
+          setErr("Debes subir una imagen");
+          setLoading(false);
+          return;
+        }        
         await uploadBytes(storageRef, file);
         fotoUrl = await getDownloadURL(storageRef);
       }
@@ -96,12 +102,25 @@ export default function CreatePage() {
           className="form-input"
           required
         />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
-          className="form-input"
-        />
+        <label
+            className="form-dropzone"
+            onDrop={(e) => {
+              e.preventDefault();
+              if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                setFile(e.dataTransfer.files[0]);
+              }
+            }}
+            onDragOver={(e) => e.preventDefault()}
+          >
+            <p>{file ? file.name : "Arrastrá una imagen o hacé clic para elegir"}</p>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              className="hidden"
+            />
+        </label>
+
 
         <button type="submit" className="form-button" disabled={loading}>
           {loading ? "Publicando..." : "Publicar"}
@@ -109,4 +128,6 @@ export default function CreatePage() {
       </form>
     </main>
   );
+  
 }
+console.log("CreatePage cargado")

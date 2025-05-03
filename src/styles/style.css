@@ -48,12 +48,22 @@ body {
 }
 
 /* --- Formularios (Registro, Publicación y Login) --- */
-.register, .create, .login {
+.register, .login {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 80vh;
 }
+.create {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 100px; /* espacio para el navbar */
+  padding-bottom: 40px;
+  min-height: calc(100vh - 80px); /* ajuste real al alto de pantalla */
+  box-sizing: border-box;
+}
+
 
 .form {
   background: white;
@@ -558,3 +568,15 @@ html {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.form-dropzone {
+  border: 2px dashed #ccc;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+}
+
+
